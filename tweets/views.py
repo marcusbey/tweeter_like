@@ -1,10 +1,18 @@
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import request, Http404, JsonResponse
 from django.shortcuts import render
 
 from .models import Tweet
 # Create your views here.
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Hello World<h1>")
+    return render(request, "pages/home.html", context={})
+
+def tweet_list_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    tweet_list = [{"id": x.id, "content": x.content} for x in qs]
+    data = {
+        "response": tweet_list
+    }
+    return JsonResponse(data)
 
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     """

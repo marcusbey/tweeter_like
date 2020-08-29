@@ -8,9 +8,10 @@ def home_view(request, *args, **kwargs):
 
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    tweet_list = [{"id": x.id, "content": x.content} for x in qs]
+    tweets_list = [{"id": x.id, "content": x.content} for x in qs]
     data = {
-        "response": tweet_list
+        "is_user": False,
+        "response": tweets_list
     }
     return JsonResponse(data)
 

@@ -1,5 +1,42 @@
 {% extends 'base.html' %}
 
+{% block head_title %}
+Me or you
+{% endblock head_title%}
+
 {% block content %}
 This is it
+<div id="tweets"> 
+    loading...
+</div>
+
+
+
+
+<script> 
+const tweetsElement = document.getElementById("tweets");
+tweetsElement.innerHTML = "";
+
+const xhr = new HMLHttpRequest();
+const method = 'GET';
+const url = "/tweets";
+const responseType = "json";
+
+xhr.responseType = responseType;
+xhr.open(method, url);
+xhr.onload = function(){
+    console.log(xhr.response);
+    const serverResponse = xhr.response;
+    const listedItems = serverResponse.response;
+    let finalTweetsStr= ""
+    for (let i = 0; i<listedItems.length; i++){
+        console.log(i);
+        console.log(listedItems[i]);
+    }
+    console.log(listedItems);
+
+}
+xhr.send();
+</script>
+
 {% endblock content %}

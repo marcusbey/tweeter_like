@@ -21,7 +21,10 @@ const xhr = new XMLHttpRequest();
 const method = 'GET';
 const url = "/tweets";
 const responseType = "json";
-
+function formatTweetElement(tweet){
+    const formattedTweet = "<div class='mb-4 tweet' id='"+ tweet.id +"'></p>" +  "<p>" + tweet.content + "</p></div>";
+    return formattedTweet
+}
 xhr.responseType = responseType;
 xhr.open(method, url);
 xhr.onload = function(){
@@ -31,9 +34,9 @@ xhr.onload = function(){
     let finalTweetStr = ""
     for (let i = 0; i < listedItems.length; i++){
         console.log(i);
-        console.log(listedItems[i]);
-        const currentItem = "<div class='mb-4'> <h1>" + listedItems[i].id + "</h1>" + "<p>" + listedItems[i].content + "</p></div>";
-          finalTweetStr += currentItem;
+        tweetObj = listedItems[i];
+        currentTweet = formatTweetElement(tweetObj);
+          finalTweetStr += currentTweet;
     }
    tweetsElement.innerHTML = finalTweetStr;
 

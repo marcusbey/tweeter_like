@@ -34,3 +34,4 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
         data['message'] = "Not found"
         status = 404
     return JsonResponse(data, status=status)
+    #json.dumps content_type = 'application/json'

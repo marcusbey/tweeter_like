@@ -32,11 +32,20 @@ Me or you
 
 
 <script> 
-
 const handleTweetCreateSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-
+    const myForm = e.target;
+    const myFormData = new FormData(myForm);
+    const method = myForm.getAttribute("method");
+    const url = myForm.getAttribute("action");
+    //where to send it
+    const xhr = new XMLHttpRequest(); 
+    xhr.open(method, url);
+    xhr.onload = function(){
+        const serverResponse = xhr.response
+        console.log(serverResponse) 
+    }
+    xhr.send(myFormData)
 } 
 
 const createTweet = document.getElementById('tweet-create-form');

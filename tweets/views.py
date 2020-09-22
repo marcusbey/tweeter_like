@@ -25,8 +25,7 @@ def tweet_create_view(request, *arg, **kwargs):
         obj.save()
         # if we receive an ajax call we don't need the redirect but we can return json response.
         if request.is_ajax():
-            return JsonResponse({}, status=201)
-
+            return JsonResponse(obj.serialize(), status=201)
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)
 
@@ -37,11 +36,7 @@ def tweet_create_view(request, *arg, **kwargs):
 
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    tweets_list = [
-        {"id": x.id,
-         "content": x.content,
-         "likes": random.randint(0, 3433)
-         } for x in qs]
+    tweets_list = [x.serialize() for x in qs]
     data = {
         "isUser": False,
         "listAll": tweets_list

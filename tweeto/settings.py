@@ -25,7 +25,7 @@ SECRET_KEY = '5c#xvtn+3$0r86f@3%t)8bvjzp2gwh&gpjw7s&$bk%t$+mjmi_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'freethemouses.com']
 
 
 # Application definition

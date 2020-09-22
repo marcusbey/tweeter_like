@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 
+
 {% block head_title %}
 Me or you
 {% endblock head_title%}
 
 {% block content %}
-This is it
-<div id="tweets"> 
+
+<div class='row'>
+    <div class='col'>
+        <h1>Welcome to Tweetos</h1>
+    </div>
+</div>
+
+<div  class="row" id="tweets"> 
     loading...
 </div>
 
@@ -17,6 +24,7 @@ This is it
 const tweetsElement = document.getElementById("tweets");
 tweetsElement.innerHTML = "";
 
+// To processs the json data from the API response
 const xhr = new XMLHttpRequest();
 const method = 'GET';
 const url = "/tweets";
@@ -31,18 +39,17 @@ function LikeBtn(tweet){
 }
 
 function formatTweetElement(tweet){
-    const formattedTweet = "<div class='mb-4 tweet' id='"+ tweet.id +"'></p>" +  "<p>" +
-         tweet.content + 
-         "</p><div class='btn-group'>" + LikeBtn(tweet ) + "</div></div>";
+    const formattedTweet = "<div class=' col-12 col-md-10 border rounded  py-3 mb-4 tweet' id='" + tweet.id + "'></p>" +  "<p>" + tweet.content + "</p><div class='btn-group'>" + LikeBtn(tweet ) + "</div> </div>";
     return formattedTweet
 }
+
 xhr.responseType = responseType;
 xhr.open(method, url);
 xhr.onload = function(){
     console.log(xhr.response); 
     const serverResponse = xhr.response;
-    const listedItems = serverResponse.response;
-    let finalTweetStr = ""
+    const listedItems = serverResponse.listAll;
+    let finalTweetStr = "";
     for (let i = 0; i < listedItems.length; i++){
         console.log(i);
         tweetObj = listedItems[i];
@@ -50,7 +57,6 @@ xhr.onload = function(){
           finalTweetStr += currentTweet;
     }
    tweetsElement.innerHTML = finalTweetStr;
-
 }
 xhr.send();
 </script>

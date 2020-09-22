@@ -2,29 +2,49 @@ from django.http import request, Http404, JsonResponse
 from django.shortcuts import render
 import random
 
+from .forms import TweetForm
 from .models import Tweet
 # Create your views here.
+
+
 def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={})
 
+
+def tweet_create_view(request, *arg, **kwargs):
+    # The tweetForm class can be initialize with data or not
+    form = TweetForm(request.POST or None)
+    if form.is_valide():
+        obj = form.save(commit=False)
+        obj.save()
+        # reinitialize a blank form
+        form = TweetForm()
+    return render(request, 'components/forms.html', context={"form": form})
+
+
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    tweets_list = [{"id": x.id, "content": x.content, "likes": random.randint(0, 3433) } for x in qs]
+    tweets_list = [
+        {"id": x.id,
+         "content": x.content,
+         "likes": random.randint(0, 3433)
+         } for x in qs]
     data = {
-        "is_user": False,
-        "response": tweets_list
+        "isUser": False,
+        "listAll": tweets_list
     }
     return JsonResponse(data)
 
+
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     """
-    REST API VIRE 
-    consume by JavaScript or Swift / Java
-    return Json
+    REST API VIEW
+    that wil return Json
     """
     data = {
         "id": tweet_id,
-        #"image": obj.image.url
+        "content": obj.content,
+        # "image": obj.image.url
     }
     status = 200
     try:
@@ -34,4 +54,3 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
         data['message'] = "Not found"
         status = 404
     return JsonResponse(data, status=status)
-    #json.dumps content_type = 'application/json'

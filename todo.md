@@ -12,9 +12,10 @@
 2. Tweets 
     -> Creating
         -> Text
-        -> Image
+        -> Image / media storage server.
     -> Delete
     -> Retweeting
+    -> Liking
 
 3. Following / Followers
 

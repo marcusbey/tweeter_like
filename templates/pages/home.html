@@ -17,7 +17,7 @@ Me or you
     <div class="col-md-6 mx-auto col-10">
         <form action="/create-tweet" id = "tweet-create-form" method="POST" class="form">
             {% csrf_token %}
-            <input type="hidden" value='/' name='next' />
+            <input type="hidden" value='/empty-page' name='next' />
             <textarea class='form-control' name='content' placeholder="Write your tweet here"></textarea>
             <button type="input" class="btn btn-primary">Tweet</button>
         </form>
@@ -43,7 +43,8 @@ const handleTweetCreateSubmit = (e) => {
     xhr.open(method, url);
     xhr.onload = function(){
         const serverResponse = xhr.response
-        console.log(serverResponse) 
+        const tweetsElement = document.getElementById("tweets");
+        loadTweets(tweetsElement);
     }
     xhr.send(myFormData)
 } 
@@ -61,12 +62,10 @@ const loadTweets = function(tweet){
     xhr.responseType = responseType;
     xhr.open(method, url);
     xhr.onload = function(){
-        console.log(xhr.response); 
         const serverResponse = xhr.response;
         const listedItems = serverResponse.listAll;
         let finalTweetStr = "";
         for (let i = 0; i < listedItems.length; i++){
-            console.log(i);
             tweetObj = listedItems[i];
             currentTweet = formatTweetElement(tweetObj);
             finalTweetStr += currentTweet;
@@ -80,7 +79,6 @@ loadTweets(tweetsElement);
 // To processs the json data from the API response
 
 function handleDidLike (tweet_id, currentCount){
-    console.log(tweet_id, currentCount);
     currentCount++; 
     return;
 }

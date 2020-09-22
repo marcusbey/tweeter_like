@@ -10,8 +10,8 @@
         -> User's who they follow? 
 
 2. Tweets 
-    -> Creating
-        -> Text
+    -> Creating  ******************************************
+        -> Text  ******************************************
         -> Image / media storage server.
     -> Delete
     -> Retweeting

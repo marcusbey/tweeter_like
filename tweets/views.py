@@ -14,12 +14,12 @@ def home_view(request, *args, **kwargs):
 def tweet_create_view(request, *arg, **kwargs):
     # The tweetForm class can be initialize with data or not
     form = TweetForm(request.POST or None)
-    if form.is_valide():
+    if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
         # reinitialize a blank form
         form = TweetForm()
-    return render(request, 'components/forms.html', context={"form": form})
+    return render(request, 'components/form.html', context={"form": form})
 
 
 def tweet_list_view(request, *args, **kwargs):

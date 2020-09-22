@@ -18,7 +18,7 @@ Me or you
         <form action="/create-tweet" id = "tweet-create-form" method="POST" class="form">
             {% csrf_token %}
             <input type="hidden" value='/' name='next' />
-            <textarea class='form-control' name='content' placeholder="Write your tweet here"></textarea>
+            <textarea required ='required' class='form-control' name='content' placeholder="Write your tweet here"></textarea>
             <button type="input" class="btn btn-primary">Tweet</button>
         </form>
     </div> 
@@ -46,9 +46,11 @@ const handleTweetCreateSubmit = (e) => {
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.onload = function(){
         if (xhr.status === 201){
-            const newTweetJson = JSON.parse(xhr.response)
-            const newTweetElement = formatTweetElement(newTweet)
-            console.log(newTweetElement)
+            const newTweetJson = JSON.parse(xhr.response);
+            const newTweetElement = formatTweetElement(newTweetJson);
+            const blockHtml = tweetsContainerElement.innerHTML;
+            tweetsContainerElement.innerHTML = newTweetElement + blockHtml;
+            myForm.reset();
         }
     }
     xhr.send(myFormData)

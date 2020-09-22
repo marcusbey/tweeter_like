@@ -38,24 +38,26 @@ const handleTweetCreateSubmit = (e) => {
     const myFormData = new FormData(myForm);
     const method = myForm.getAttribute("method");
     const url = myForm.getAttribute("action");
+    
     //where to send it
     const xhr = new XMLHttpRequest(); 
     xhr.open(method, url);
     xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.onload = function(){
-        const serverResponse = xhr.response;
-        console.log(xhr.status, serverResponse);
-        const tweetsElement = document.getElementById("tweets");
-        loadTweets(tweetsElement);
+        if (xhr.status === 201){
+            const newTweetJson = JSON.parse(xhr.response)
+            const newTweetElement = formatTweetElement(newTweet)
+            console.log(newTweetElement)
+        }
     }
     xhr.send(myFormData)
 } 
 
 const createTweet = document.getElementById('tweet-create-form');
 createTweet.addEventListener("submit", handleTweetCreateSubmit )
-const tweetsElement = document.getElementById("tweets");
-
+const tweetsContainerElement = document.getElementById("tweets");
+ 
 const loadTweets = function(tweet){
     const xhr = new XMLHttpRequest();
     const method = 'GET';
@@ -73,12 +75,12 @@ const loadTweets = function(tweet){
             currentTweet = formatTweetElement(tweetObj);
             finalTweetStr += currentTweet;
         }
-    tweetsElement.innerHTML = finalTweetStr; 
+    tweetsContainerElement.innerHTML = finalTweetStr; 
     }
     xhr.send();
 }
 
-loadTweets(tweetsElement);
+loadTweets(tweetsContainerElement);
 // To processs the json data from the API response
 
 function handleDidLike (tweet_id, currentCount){

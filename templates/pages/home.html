@@ -65,14 +65,12 @@ const handleTweetCreateSubmit = (e) => {
             handleTweetFormError("", false);
             const newTweetJson = xhr.response;
             const newTweetElement = formatTweetElement(newTweetJson);
-            console.log(newTweetElement)
             const blockHtml = tweetsContainerElement.innerHTML;
             tweetsContainerElement.innerHTML = newTweetElement + blockHtml;
             myForm.reset();
         } else if (xhr.status === 400) {
             
             const errorJson = xhr.response;
-            console.log(errorJson);
             const contentError = errorJson.content
             let contentErrorMsg;
             if (contentError){

@@ -17,12 +17,15 @@ def home_view(request, *args, **kwargs):
 
 
 def tweet_create_view(request, *arg, **kwargs):
+    '''
+    REST API CREATE VIEW
+    '''
     # The tweetForm class can be initialize with data or not
     user = request.user
     if not request.user.is_authenticated:
         user = None
         if request.is_ajax():
-            return jsonResponse({}, status=401)
+            return JsonResponse({}, status=401)
         return redirect(settings.LOGIN_URL)
     form = TweetForm(request.POST or None)
     next_url = request.POST.get("next") or None

@@ -13,9 +13,10 @@
     -> Creating  ******************************************
         -> Text  ******************************************
         -> Image / media storage server.
-    -> Delete
-    -> Retweeting
-    -> Liking
+    -> User Permissons  ***********************************
+        -> Delete
+        -> Retweeting
+        -> Liking
 
 3. Following / Followers
 

@@ -26,7 +26,7 @@ SECRET_KEY = '5c#xvtn+3$0r86f@3%t)8bvjzp2gwh&gpjw7s&$bk%t$+mjmi_'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'freethemouses.com']
-
+LOGIN_URL = "/login"
 
 # Application definition
 

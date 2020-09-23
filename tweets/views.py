@@ -12,16 +12,25 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
+    print(request.user or None)
     return render(request, "pages/home.html", context={})
 
 
 def tweet_create_view(request, *arg, **kwargs):
     # The tweetForm class can be initialize with data or not
-    print("ajax", request.is_ajax())
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return jsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
     form = TweetForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
+        # do other form related logic
+        # obj.user = request.user or None # Annonymous users
+        obj.user = user
         obj.save()
         # if we receive an ajax call we don't need the redirect but we can return json response.
         if request.is_ajax():

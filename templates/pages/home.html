@@ -132,8 +132,22 @@ loadTweets(tweetsContainerElement);
 // To processs the json data from the API response
 
 function handleDidLike (tweet_id, currentCount){
-    currentCount++; 
-    return;
+    const url = "/api/tweets/action";
+    const method="POST";
+    const data = JSON.stringify({
+        id: tweet_id,
+        action: "like"
+    });
+    const xhr = new XMLHttpRequest;
+    xhr.open(method, url)
+    xhr.setRequestHeader("Content-Type", "application/json" )
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+    xhr.onload = function(){
+        console.log(xhr.status, xhr.response)
+    }
+    xhr.send(data)
+    return
 }
 function LikeBtn(tweet){
     return "<button class=' btn btn-primary btn-small' onclick=handleDidLike(" + tweet.id+ "," + tweet.likes+ ")>" + tweet.likes + " Likes</button>";

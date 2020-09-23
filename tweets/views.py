@@ -15,7 +15,6 @@ from .serializers import TweetSerializer, TweetActionSerializer
 # Create your views here.
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
-TWEET_ACTION_OPTIONS = settings.TWEET_ACTION_OPTIONS
 
 
 def home_view(request, *args, **kwargs):
@@ -66,7 +65,7 @@ def tweet_action_view(request, *args, **kwargs):
     id is required.     
     Action option are: like, unlike, retweet
     '''
-    serializer = TweetActionSerializer(request.POST)
+    serializer = TweetActionSerializer(data=request.POST)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
         action = data.get("action")

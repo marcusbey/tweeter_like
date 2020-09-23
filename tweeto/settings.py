@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'freethemouses.com']
 LOGIN_URL = "/login"
 MAX_TWEET_LENGTH = 240
+TWEET_ACTION_OPTIONS = ["likes", "unlike", "retweet"]
 
 
 # Application definition

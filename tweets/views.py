@@ -5,7 +5,9 @@ from django.utils.http import is_safe_url
 from rest_framework.response import Response
 import random
 
-from rest_framework.decorators import api_view
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from .forms import TweetForm
 from .models import Tweet
 from .serializers import TweetSerializer
@@ -21,6 +23,8 @@ def home_view(request, *args, **kwargs):
 
 
 @api_view(['POST'])
+# @authentication_classes([SessionAuthentication, customAuth])
+@permission_classes([IsAuthenticated])
 def tweet_create_view(request, *arg, **kwargs):
     serializer = TweetSerializer(data=request.POST or None)
     if serializer.is_valid(raise_exception=True):

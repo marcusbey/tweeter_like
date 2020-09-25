@@ -67,7 +67,6 @@ def tweet_action_view(request, *args, **kwargs):
     serializer = TweetActionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
-        console.log(data)
         tweet_id = data.get("id")
         action = data.get("action")
         content = data.get("content")

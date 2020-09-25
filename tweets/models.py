@@ -14,7 +14,10 @@ class TweetLike(models.Model):
 
 class Tweet(models.Model):
     # keep tweets after user is deleted.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
+    # many users can many tweets
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="tweets")
     likes = models.ManyToManyField(
         User, related_name='tweet_user', blank=True, through=TweetLike)
     content = models.TextField(blank=True, null=True)
@@ -25,11 +28,15 @@ class Tweet(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.content[:50]
+        return str(self.content)[0:50]
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "content": self.content,
-            "likes": 'random.randint(0, 200)'
-        }
+    @property
+    def is_retweet(self):
+        return self.parent != None
+
+    # def serialize(self):
+    #     return {
+    #         "id": self.id,
+    #         "content": self.content,
+    #         "likes": 'random.randint(0, 200)'
+    #     }

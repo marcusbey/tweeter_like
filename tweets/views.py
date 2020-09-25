@@ -10,7 +10,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .forms import TweetForm
 from .models import Tweet
-from .serializers import TweetSerializer, TweetActionSerializer
+from .serializers import (TweetSerializer,
+                          TweetActionSerializer,
+                          TweetCreateSerializer
+                          )
 
 # Create your views here.
 
@@ -21,18 +24,18 @@ def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 # @authentication_classes([SessionAuthentication, customAuth])
-@permission_classes([IsAuthenticated])
+@ permission_classes([IsAuthenticated])
 def tweet_create_view(request, *arg, **kwargs):
-    serializer = TweetSerializer(data=request.POST or None)
+    serializer = TweetCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     qs = Tweet.objects.filter(id=tweet_id)
     if not qs.exists():
@@ -42,8 +45,8 @@ def tweet_detail_view(request, tweet_id, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 
-@api_view(['GET', 'DELETE', 'POST'])
-@permission_classes([IsAuthenticated])
+@ api_view(['GET', 'DELETE', 'POST'])
+@ permission_classes([IsAuthenticated])
 def tweet_delete_view(request, tweet_id, *args, **kwargs):
     qs = Tweet.objects.filter(id=tweet_id)
     if not qs.exists():
@@ -57,11 +60,11 @@ def tweet_delete_view(request, tweet_id, *args, **kwargs):
     return Response({"message": "This tweet have been removed"}, status=200)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@ api_view(['POST'])
+@ permission_classes([IsAuthenticated])
 def tweet_action_view(request, *args, **kwargs):
     '''
-    id is required.     
+    id is required.
     Action option are: like, unlike, retweet
     '''
     serializer = TweetActionSerializer(data=request.data)
@@ -83,12 +86,17 @@ def tweet_action_view(request, *args, **kwargs):
             serializer = TweetSerializer(obj)
             return Response(serializer.data, status=200)
         elif action == "retweet":
-            # next thing to do
-            pass
+            new_tweet = Tweet.objects.create(
+                user=request.user,
+                parent=obj,
+                content=content,
+            )
+            serializer = TweetSerializer(new_tweet)
+            return Response(serializer.data, status=200)
     return Response({}, status=200)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
     serializer = TweetSerializer(qs, many=True)
@@ -138,7 +146,7 @@ def tweet_list_view_django(request, *args, **kwargs):
     return JsonResponse(data)
 
 
-def tweet_detail_view_django(request, tweet_id, *args, **kwargs):
+def tweet_detail_view_django(request, tweet_id, obj, *args, **kwargs):
     """
     REST API VIEW
     that wil return Json

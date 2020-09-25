@@ -16,6 +16,8 @@
     -> User Permissons  ***********************************
         -> Delete
         -> Retweeting
+            -> Read only serializer
+            -> Create only serializer
         -> Liking
 
 3. Following / Followers

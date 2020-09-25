@@ -10,6 +10,7 @@ TWEET_ACTION_OPTIONS = settings.TWEET_ACTION_OPTIONS
 class TweetActionSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     action = serializers.CharField()
+    content = serializers.CharField(allow_blank=True, required=False)
 
     def validate_action(self, value):
         value = value.lower().strip()
@@ -24,7 +25,7 @@ class TweetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tweet
-        fields = ['id', 'content', 'likes']
+        fields = ['id', 'content', 'likes', 'timestamp']
 
     def get_likes(self, obj):
         return obj.likes.count()

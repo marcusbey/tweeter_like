@@ -18,7 +18,6 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
-    print(request.user or None)
     return render(request, "pages/home.html", context={}, status=200)
 
 
@@ -65,26 +64,27 @@ def tweet_action_view(request, *args, **kwargs):
     id is required.     
     Action option are: like, unlike, retweet
     '''
-    serializer = TweetActionSerializer(data=request.POST)
+    serializer = TweetActionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
+        console.log(data)
+        tweet_id = data.get("id")
         action = data.get("action")
+        content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
         if not qs.exists():
-            return Response({"messge": "You cannot delete this tweet"}, status=401)
+            return Response({}, status=404)
         obj = qs.first()
         if action == "like":
             obj.likes.add(request.user)
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
         elif action == "unlike":
             obj.likes.remove(request.user)
         elif action == "retweet":
             # next thing to do
             pass
-    if request.user in obj.likes.all():
-        obj.likes.remove(request.user)
-    else:
-        obj.likes.add(request.user)
-    return Response({"message": "This tweet have been removed"}, status=200)
+    return Response({}, status=200)
 
 
 @api_view(['GET'])

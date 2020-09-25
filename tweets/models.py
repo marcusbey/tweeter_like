@@ -21,15 +21,15 @@ class Tweet(models.Model):
     image = models.FileField(upload_to='images/', blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.content[:50]
-
     class Meta:
         ordering = ['-id']
+
+    def __str__(self):
+        return self.content[:50]
 
     def serialize(self):
         return {
             "id": self.id,
             "content": self.content,
-            "likes": random.randint(0, 200)
+            "likes": 'random.randint(0, 200)'
         }

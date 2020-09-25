@@ -9,5 +9,4 @@ urlpatterns = [
 
     path('api/tweets/<int:tweet_id>/delete', views.tweet_delete_view),
     path('api/tweets/action', views.tweet_action_view),
-
 ]

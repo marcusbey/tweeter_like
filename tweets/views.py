@@ -80,6 +80,8 @@ def tweet_action_view(request, *args, **kwargs):
             return Response(serializer.data, status=200)
         elif action == "unlike":
             obj.likes.remove(request.user)
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
         elif action == "retweet":
             # next thing to do
             pass

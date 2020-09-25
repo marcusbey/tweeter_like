@@ -183,13 +183,19 @@ function LikeBtn(tweet) {
     tweet.id + "," + tweet.likes + ",'like')>" + tweet.likes + " Likes</button>"
 }
 
+function RetweetBtn(tweet) {
+return "<button class='btn btn-outline-success btn-sm' onclick=handleAction(" + 
+tweet.id + "," + tweet.likes + ",'retweet')>Retweet</button>"
+}
+
 function UnLikeBtn(tweet) {
 return "<button class='btn btn-outline-primary btn-sm' onclick=handleAction(" + 
-tweet.id + "," + tweet.likes + ", 'unlike')>Unlike</button>"
+tweet.id + "," + tweet.likes + ",'unlike')>Unlike</button>"
 }
 
 function formatTweetElement(tweet){
-    const formattedTweet = "<div class=' tweet col-12 col-md-10 border rounded  py-3 mb-4 tweet' id='" + tweet.id + "'></p>" +  "<p>" + tweet.content + "</p><div class='btn-group'>" + LikeBtn(tweet) + "</div> </div>";
+    const formattedTweet = "<div class=' tweet col-12 col-md-10 border rounded  py-3 mb-4 tweet' id='" + tweet.id + "'></p>" +  "<p>" + tweet.content + "</p><div class='btn-group'>" + 
+        LikeBtn(tweet) + UnLikeBtn(tweet) + RetweetBtn(tweet) + "</div> </div>";
     return formattedTweet
 }
 

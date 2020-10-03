@@ -145,7 +145,7 @@ function loadTweets(tweet){
             const currentTweet = formatTweetElement(tweetObj);
             finalTweetStr += currentTweet;
         }
-    tweet.innerHTML = finalTweetStr; 
+        tweet.innerHTML = finalTweetStr; 
     }
     xhr.send();
 }
@@ -155,7 +155,7 @@ loadTweets(tweetsContainerElement);
 // To processs the json data from the API response
 function handleAction(tweet_id, currentCount, action){
     console.log(tweet_id, currentCount);
-    const url = "api/tweets/action";
+    const url = "/api/tweets/action";
     const method = "POST";
     const data = JSON.stringify({
         id: tweet_id,
@@ -171,7 +171,6 @@ function handleAction(tweet_id, currentCount, action){
     xhr.onload = function() {
         // react.js to handle the state 
         loadTweets(tweetsContainerElement)
-        console.log(data);
     };
     xhr.send(data);
     return 

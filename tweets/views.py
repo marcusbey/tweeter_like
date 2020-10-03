@@ -12,7 +12,7 @@ from .forms import TweetForm
 from .models import Tweet
 from .serializers import (TweetSerializer,
                           TweetActionSerializer,
-                          TweetCreateSerializer
+                          TweetCreateSerializer,
                           )
 
 # Create your views here.
@@ -28,7 +28,7 @@ def home_view(request, *args, **kwargs):
 # @authentication_classes([SessionAuthentication, customAuth])
 @ permission_classes([IsAuthenticated])
 def tweet_create_view(request, *arg, **kwargs):
-    serializer = TweetCreateSerializer(data=request.data)
+    serializer = TweetSerializer(data=request.POST)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
@@ -92,7 +92,7 @@ def tweet_action_view(request, *args, **kwargs):
                 content=content,
             )
             serializer = TweetSerializer(new_tweet)
-            return Response(serializer.data, status=200)
+            return Response(serializer.data, status=201)
     return Response({}, status=200)
 
 

@@ -22,7 +22,7 @@ from tweets import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view),
-    path('create-tweets', views.tweet_create_view),
+    path('create', views.tweet_create_view),
     path('tweets', views.tweet_list_view),
     path('api/tweets/', include('tweets.urls')),
 ]

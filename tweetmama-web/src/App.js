@@ -48,12 +48,12 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and same to reload.
         </p>
-        <p>
+        <div>
           {tweets.map((item, index) => {
-            return <Tweet tweet={item}  />
+            return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
             })
           }
-        </p>
+        </div>
         <a
           className="App -link"
           href="https://reactjs.org"

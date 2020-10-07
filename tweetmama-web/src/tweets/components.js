@@ -23,7 +23,8 @@ import {loadTweets} from '../lookup'
 export function ActionBtn(props) {
     const {tweet, action} = props
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
-    return action.type === 'like' ? <button className={className}> {tweet.likes} Likes </button> : null
+    const display = action.type === 'like'? `${tweet.likes} ${action.display}` : action.display
+    return <button className={className}> {display} </button>
   }
   
   export function Tweet(props) {
@@ -32,9 +33,9 @@ export function ActionBtn(props) {
     return <div className={className}>
       <p>{tweet.id}- {tweet.content}</p>
       <div className = 'btn btn-group'>
-        <ActionBtn tweet={tweet} action ={{type:"like"}}/>
-        <ActionBtn tweet={tweet} action ={{type:"unlike"}}/>
-        <ActionBtn tweet={tweet} action ={{type:"retweet"}}/>
+        <ActionBtn tweet={tweet} action ={{type:"like", display: "Likes"}}/>
+        <ActionBtn tweet={tweet} action ={{type:"unlike", display: "Unlike"}}/>
+        <ActionBtn tweet ={tweet} action ={{type:"retweet", display: "Retweet"}}/>
       </div>
     </div>
   }

@@ -23,10 +23,10 @@ function loadTweets(callback){
 }
 
 
-function LikeBtn(props) {
-  const {tweet} = props
+function ActionBtn(props) {
+  const {tweet, action} = props
   const className = props.className ? props.className : 'btn btn-primary btn-sm'
-  return <button className={className}> {tweet.likes} Likes </button>
+  return action.type === 'like' ? <button className={className}> {tweet.likes} Likes </button> : null
 }
  
 
@@ -36,7 +36,9 @@ function Tweet(props) {
   return <div className={className}>
     <p>{tweet.id}- {tweet.content}</p>
     <div className = 'btn btn-group'>
-      <LikeBtn tweet={tweet} />
+      <ActionBtn tweet={tweet} action ={{type:"like"}}/>
+      <ActionBtn tweet={tweet} action ={{type:"unlike"}}/>
+      <ActionBtn tweet={tweet} action ={{type:"retweet"}}/>
     </div>
   </div>
 }

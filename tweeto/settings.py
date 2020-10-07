@@ -25,7 +25,7 @@ SECRET_KEY = '5c#xvtn+3$0r86f@3%t)8bvjzp2gwh&gpjw7s&$bk%t$+mjmi_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'freethemouses.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'freethemouses.com', 'localhost']
 LOGIN_URL = "/login"
 MAX_TWEET_LENGTH = 240
 TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
@@ -42,14 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-party
     'rest_framework',
+    'corsheaders',
     # internal
     'tweets.apps.TweetsConfig',
+
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

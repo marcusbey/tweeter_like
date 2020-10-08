@@ -2,6 +2,27 @@ import React, { useEffect, useState} from 'react'
 
 import {loadTweets} from '../lookup'
 
+export function TweetComponent(props) {
+    const textAreaRef = React.createRef()
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(event)
+        console.log(textAreaRef)
+    }
+    return <div className={props.className}>
+                <div className='col-12 mb-3'>
+                    <form onSubmite={handleSubmit}>
+                        <textarea required={true} className='form-control' name='tweet'>
+
+                        </textarea>
+                        <button type='submit' className='btn btn-primary my-3'>Tweet</button>
+                    </form>
+                </div>
+                <TweetsList />
+            </div>
+
+}       
+
 export function  TweetsList(props) {
     const [tweets, setTweets] = useState([{content: '123'}])
   
@@ -15,9 +36,9 @@ export function  TweetsList(props) {
     return tweets.map((item, index) => {
       return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
       })
-     
+      
   }
-
+ 
 
 
 export function ActionBtn(props) {

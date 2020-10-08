@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 
 import {loadTweets} from '../lookup'
 
-  export function  TweetsList(props) {
+export function  TweetsList(props) {
     const [tweets, setTweets] = useState([{content: '123'}])
   
     useEffect(() => {
@@ -22,16 +22,26 @@ import {loadTweets} from '../lookup'
 
 export function ActionBtn(props) {
     const {tweet, action} = props
+    const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0)
+    const [userLike, setUserLike] = useState(tweet.userLike === true ? true : false)
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'
-    const display = action.type === 'like'? `${tweet.likes} ${actionDisplay}` : actionDisplay 
-    let likes = tweet.likes
+
     const handleClick = (event) => {
         event.preventDefault()
-        if (action.type === 'like')
-            console.log(tweet.likes + 1)
-            likes = tweet.likes + 1
+        if (action.type === 'like'){
+            if (userLike === true) {
+                //toogle like 
+                setLikes(likes - 1)
+                setUserLike(false)
+            } else {
+                setLikes(likes + 1)
+                setUserLike(true)
+            }
+            
+        }
       }
+    const display = action.type === 'like' ? `${likes} ${actionDisplay}` : actionDisplay 
     return <button className={className} onClick={handleClick}> {display} </button>
   }
   

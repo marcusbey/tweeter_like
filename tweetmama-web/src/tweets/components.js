@@ -4,35 +4,54 @@ import {loadTweets} from '../lookup'
 
 export function TweetComponent(props) {
     const textAreaRef = React.createRef()
+    const [newTweets, setNewTweets] = useState([])
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(event)
-        console.log(textAreaRef)
+        const newVal = textAreaRef.current.value
+        let tempNewTweets = [...newTweets]      
+        tempNewTweets.unshift({
+            content: newVal, 
+            likes: 0, 
+            id: 12343
+        })
+        setNewTweets(tempNewTweets)
+        textAreaRef.current.value = ''
     }
     return <div className={props.className}>
                 <div className='col-12 mb-3'>
-                    <form onSubmite={handleSubmit}>
-                        <textarea required={true} className='form-control' name='tweet'>
-
+                    <form onSubmit={handleSubmit}>
+                        <textarea ref={textAreaRef} required={true} className='form-control' name='tweet'>  
+                        
                         </textarea>
                         <button type='submit' className='btn btn-primary my-3'>Tweet</button>
                     </form>
                 </div>
-                <TweetsList />
+                <TweetsList newTweets={newTweets}/>
             </div>
 
 }       
 
 export function  TweetsList(props) {
-    const [tweets, setTweets] = useState([{content: '123'}])
-  
+    const [tweetsInit, setTweetsInit] = useState([])
+    const [tweets, setTweets] = useState([])
+
+    //setTweetsInit([...props.newTweets].concat(tweetsInit))
+    useEffect(()=> {
+        let final = [...props.newTweets].concat(tweetsInit)
+        if (final.length !== tweets.length){
+            setTweets(final)
+        }
+    }, [props.newTweets, tweets, tweetsInit])
+
     useEffect(() => {
-      const myCallback = (response, status ) => {
-        if (status === 200)
-          setTweets(response) 
-      }  
+        const myCallback = (response, status ) => {
+        if (status === 200){
+            setTweetsInit(response)
+      } else { 
+        alert("There was an error")
+      }}
       loadTweets(myCallback)
-    }, [])
+    }, [tweetsInit])
     return tweets.map((item, index) => {
       return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
       })

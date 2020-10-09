@@ -10,9 +10,9 @@ export function TweetComponent(props) {
         const newVal = textAreaRef.current.value
         let tempNewTweets = [...newTweets]      
         tempNewTweets.unshift({
-            content: newVal, 
-            likes: 0, 
-            id: 12343
+            content: newVal,
+            likes: 0,
+            id: 1234
         })
         setNewTweets(tempNewTweets)
         textAreaRef.current.value = ''

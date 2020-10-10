@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import {TweetComponent} from './tweets'
+import {TweetsComponent} from './tweets'
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
         </p>
         <div>
           {
-            < TweetComponent />
+            < TweetsComponent />
           }
         </div>
         <a

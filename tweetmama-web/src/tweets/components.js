@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 
 import {loadTweets} from '../lookup'
 
-export function TweetComponent(props) {
+export function TweetsComponent(props) {
     const textAreaRef = React.createRef()
     const [newTweets, setNewTweets] = useState([])
     const handleSubmit = (event) => {

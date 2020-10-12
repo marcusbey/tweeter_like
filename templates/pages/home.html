@@ -7,13 +7,15 @@ Me or you
 
 {% block content %}
 
-<div class='row text-center'>
+<div id='tweetos'></div>
+
+<div class='row text-center d-none'>
     <div class='col'>
         <h1>Welcome to Tweetos</h1>
     </div>
 </div>
 
-<div class="row mb-3">
+<div class="row mb-3 d-none">
     <div class="col-md-6 mx-auto col-10">
         <form action="/create" id = "tweet-create-form" method="POST" class="form">
             {% csrf_token %}
@@ -25,7 +27,7 @@ Me or you
     </div> 
 </div>
 
-<div  class="row" id="tweets">  
+<div  class="row" id="tweets d-none">  
     loading...
 </div>
 

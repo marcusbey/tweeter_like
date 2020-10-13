@@ -24,7 +24,7 @@ from tweets import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view),
-    path('react/', TemplateView.as_view(template_name='react.html')),
+    path('react/', TemplateView.as_view(template_name='react_via_django.html')),
     path('create', views.tweet_create_view),
     path('tweets', views.tweet_list_view),
     path('api/tweets/', include('tweets.urls')),
